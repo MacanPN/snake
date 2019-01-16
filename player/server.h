@@ -14,6 +14,8 @@
 #define FRUIT 1
 #define ROCK 9
 
+#include <inttypes.h>
+
 typedef struct payload_t {
     uint16_t snake_len;
     uint16_t fx, fy;

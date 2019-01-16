@@ -1,5 +1,10 @@
+#ifdef __WIN32__
+#include <winsock2.h>
+#else
 #include <sys/socket.h>
 #include <arpa/inet.h> //inet_addr
+#endif
+
 #include <unistd.h>    //write
 
 #include <stdio.h>
@@ -9,9 +14,6 @@
 #include "server.h"
 
 #pragma pack(1)
-
-
-
 #pragma pack()
 
 
@@ -20,14 +22,25 @@ int createSocket(int port)
     int sock, err;
     struct sockaddr_in server;
 
-    if ((sock = socket(AF_INET, SOCK_STREAM, 0)) < 0)
+#ifdef __WIN32__
+    WSADATA wsaData;
+    int iResult;
+    iResult = WSAStartup(MAKEWORD(2,2), &wsaData);
+    if (iResult != 0) {
+        printf("WSAStartup failed with error: %d\n", iResult);
+        return 1;
+    }
+#endif
+
+
+    if ((sock = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP)) < 0)
     {
-        printf("ERROR: Socket creation failed\n");
+        printf("ERROR: Socket creation failed\n %d",sock);
         exit(1);
     }
     printf("Socket created\n");
 
-    bzero((char *) &server, sizeof(server));
+    memset((char *) &server,0, sizeof(server));
     server.sin_family = AF_INET;
     server.sin_addr.s_addr = INADDR_ANY;
     server.sin_port = htons(port);
@@ -95,7 +108,7 @@ int main(int argc, char *argv[])
     int nread;
     struct sockaddr_in client;
     int clilen = sizeof(client);
-    srand(time(0)); 
+    srand(time(0));
     ssock = createSocket(PORT);
     printf("Server listening on port %d\n", PORT);
 
@@ -109,7 +122,7 @@ int main(int argc, char *argv[])
         }
 
         printf("Accepted connection from %s\n", inet_ntoa(client.sin_addr));
-        bzero(buff, BUFFSIZE);
+        memset(buff,0, BUFFSIZE);
         while ((nread=read(csock, buff, BUFFSIZE)) > 0)
         {
             //printf("\nReceived %d bytes\n", nread);
@@ -117,7 +130,7 @@ int main(int argc, char *argv[])
             //print_map(p->map);
             reply rep = get_reply(p);
             //printf("Sending reply.. %d\n",rep.direction);
-            
+
             sendMsg(csock, &rep, sizeof(reply));
         }
         printf("Closing connection to client\n");

@@ -31,8 +31,8 @@ reply get_reply(payload *p){
     if(r.direction == DOWN) { dx= 0; dy= 1; }
     printf("hx: %d hy: %d dx: %d dy: %d",hx,hy,dx,dy);
        // if the new position of head is inside the playing field
-    if((hx+dx >= 0) && (hx+dx < FIELD_WIDTH)&&
-       (hy+dy >= 0) && (hy+dy < FIELD_HEIGHT)&&
+    if((hx+dx >= 0) && (hx+dx < FIELD_WIDTH-1)&&
+       (hy+dy >= 0) && (hy+dy < FIELD_HEIGHT-1)&&
       // and map there is empty 
         (p->map[hx+dx][hy+dy]==EMPTY)){
       // then the direction is Ok to move in

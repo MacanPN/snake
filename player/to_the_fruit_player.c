@@ -22,19 +22,22 @@ reply get_reply(payload *p){
   p->map[p->fx][p->fy] = EMPTY;
   printf("hx:%d hy:%d fx:%d fy:%d\n",hx, hy, p->fx, p->fy);
   
-  if((p->fx < hx)&&(p->map[hx-1][hy]==EMPTY)){
+  // AK je ovocie vlavo A vlavo je prazdno
+  if((p->fx < hx) && (p->map[hx-1][hy]==EMPTY)){
     r.direction = LEFT;
     return r;
   }
-  if((p->fx > hx)&&(p->map[hx+1][hy]==EMPTY)){
+  // AK je ovocie vpravo A vpravo je volno
+  if((p->fx > hx) && (p->map[hx+1][hy]==EMPTY)){
     r.direction = RIGHT;
     return r;
   }
-  if((p->fy < hy)&&(p->map[hx][hy-1]==EMPTY)){
+  // AK je ovocie hore A hore je volno
+  if((p->fy < hy) && (p->map[hx][hy-1]==EMPTY)){
     r.direction = UP;
     return r;
   }
-  if((p->fy > hy)&&(p->map[hx][hy+1]==EMPTY)){
+  if((p->fy > hy) && (p->map[hx][hy+1]==EMPTY)){
     r.direction = DOWN;
     return r;
   }
