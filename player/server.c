@@ -64,7 +64,7 @@ void closeSocket(int sock)
 
 void sendMsg(int sock, void* msg, uint32_t msgsize)
 {
-    if (write(sock, msg, msgsize) < 0)
+    if (send(sock, msg, msgsize,0) < 0)
     {
         printf("Can't send message.\n");
         closeSocket(sock);
@@ -123,11 +123,11 @@ int main(int argc, char *argv[])
 
         printf("Accepted connection from %s\n", inet_ntoa(client.sin_addr));
         memset(buff,0, BUFFSIZE);
-        while ((nread=read(csock, buff, BUFFSIZE)) > 0)
+        while ((nread=recv(csock, buff, BUFFSIZE,0)) > 0)
         {
-            //printf("\nReceived %d bytes\n", nread);
+            printf("\nReceived %d bytes\n", nread);
             payload *p = (payload*) buff;
-            //print_map(p->map);
+            print_map(p->map);
             reply rep = get_reply(p);
             //printf("Sending reply.. %d\n",rep.direction);
 

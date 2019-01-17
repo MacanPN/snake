@@ -21,37 +21,7 @@ reply get_reply(payload *p){
   int fy = p->fy;
   int fx = p->fx;
   
-  printf("\n\n hy: %d fy:%d \n\n\n",hy,fy);
-  
-  if(hy<fy){
-    r.direction = DOWN;
-  }
-  if(hy>fy){
-    r.direction = UP;
-  }
-  
-  if(hx>fx){
-    r.direction = LEFT;
-  }
-  if(hx<fx){
-    r.direction = RIGHT;
-  }
-  
-  if(r.direction == RIGHT){
-    if(p->map[hx+1][hy] == EMPTY){
-      return r;
-    }else{
-      r.direction = DOWN;
-    }
-  }
-  
-  if(r.direction == DOWN){
-    if(p->map[hx][hy+1] == EMPTY){
-      return r;
-    }else{
-      r.direction = LEFT;
-    }
-  }
+  r.direction = RIGHT;
   return r;
 }
 
