@@ -90,19 +90,19 @@ reply get_reply(payload *p){
   int lx=x;
   int ly=y;
   while((x!=hx)||(y!=hy)){
-    if(dist[x-1][y] == dist[x][y]-1){
+    if((dist[x-1][y] == dist[x][y]-1)&&(x>0)){
       x = x-1;
       came_from = RIGHT;
     }
-    if(dist[x+1][y] == dist[x][y]-1){
+    if((dist[x+1][y] == dist[x][y]-1)&&(x<FIELD_WIDTH)){
       x = x+1;
       came_from = LEFT;
     }
-    if(dist[x][y+1] == dist[x][y]-1){
+    if((dist[x][y+1] == dist[x][y]-1)&&(y<FIELD_HEIGHT)){
       y = y+1;
       came_from = UP;
     }
-    if(dist[x][y-1] == dist[x][y]-1){
+    if((dist[x][y-1] == dist[x][y]-1)&&(y>0)){
       y = y-1;
       came_from = DOWN;
     }

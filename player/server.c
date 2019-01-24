@@ -127,7 +127,7 @@ int main(int argc, char *argv[])
         {
             printf("\nReceived %d bytes\n", nread);
             payload *p = (payload*) buff;
-            print_map(p->map);
+            //print_map(p->map);
             reply rep = get_reply(p);
             //printf("Sending reply.. %d\n",rep.direction);
 

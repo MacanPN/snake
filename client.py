@@ -38,8 +38,8 @@ def timer_handler(signum, frame):
   raise TimeoutError("Timeout")
 
 def get_direction(payload_out, host='localhost', port=2300, maxtime=1):
-    #signal.signal(signal.SIGALRM, timer_handler)
-    #signal.alarm(maxtime)
+    signal.signal(signal.SIGALRM, timer_handler)
+    signal.alarm(maxtime)
     try:
       server_addr = (host, port)
       s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -64,7 +64,7 @@ def get_direction(payload_out, host='localhost', port=2300, maxtime=1):
               buff = s.recv(sizeof(Reply))
               d = Reply.from_buffer_copy(buff).direction
               print "Player",host,":",port,"sent direction:",d
-              #signal.alarm(0)
+              signal.alarm(0)
               return d
               '''print "Received id=%d, counter=%d, temp=%f" % (payload_in.id,
                                                           payload_in.counter,

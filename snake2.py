@@ -23,6 +23,7 @@ EMPTY = 0
 FRUIT = 1
 ROCK  = 9
 MOVABLE = [EMPTY, FRUIT]
+turn_delay = 0.0
 
 class Snake():
   def __init__(self, env, sid, x=None, y=None, d=RIGHT, l=10):
@@ -156,6 +157,8 @@ class environment():
     while True:
       x = random.randrange(0,FIELD_WIDTH-1)
       y = random.randrange(0,FIELD_HEIGHT-1)
+      #x = 0
+      #y = 5
       if(self.map_filled.iloc[y,x] == EMPTY):
         self.fruit = [x,y]
         self.map_filled.iloc[y,x] = FRUIT
@@ -190,4 +193,4 @@ while 1:
   
     
   #IPython.embed()
-  time.sleep(0.1)
+  time.sleep(turn_delay)
